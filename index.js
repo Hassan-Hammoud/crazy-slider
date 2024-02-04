@@ -53,12 +53,12 @@ function showSlider(type) {
 // Lazy load
 document.querySelectorAll(".lazy-load").forEach((img) => lazyLoad(img).load());
 
-document.querySelectorAll("img[data-src]").forEach((img) => {
+document.querySelectorAll(".lazy-load").forEach((img) => {
   var load = lazyLoad(img).load;
   document.addEventListener("DOMContentLoaded", load);
 });
 
-document.querySelectorAll("img[data-src]").forEach((img) => {
+document.querySelectorAll(".lazy-load").forEach((img) => {
   var load = lazyLoad(img).load;
   checkViewport();
   window.addEventListener("scroll", checkViewport);
