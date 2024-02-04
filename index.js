@@ -49,3 +49,35 @@ function showSlider(type) {
     next.click();
   }, timeAutoNext);
 }
+
+// Lazy load
+document.querySelectorAll(".lazy-load").forEach((img) => lazyLoad(img).load());
+
+document.querySelectorAll("img[data-src]").forEach((img) => {
+  var load = lazyLoad(img).load;
+  document.addEventListener("DOMContentLoaded", load);
+});
+
+document.querySelectorAll("img[data-src]").forEach((img) => {
+  var load = lazyLoad(img).load;
+  checkViewport();
+  window.addEventListener("scroll", checkViewport);
+  window.addEventListener("resize", checkViewport);
+  window.addEventListener("orientationchange", checkViewport);
+  function checkViewport() {
+    var rect = img.getBoundingClientRect();
+    var isVisible =
+      rect.top <=
+        (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.top + rect.height >= 0 &&
+      rect.left <=
+        (window.innerWidth || document.documentElement.clientWidth) &&
+      rect.left + rect.width >= 0;
+    if (isVisible) {
+      window.removeEventListener("scroll", checkViewport);
+      window.removeEventListener("resize", checkViewport);
+      window.removeEventListener("orientationchange", checkViewport);
+      load();
+    }
+  }
+});
